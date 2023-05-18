@@ -3,6 +3,9 @@ install:
 	poetry add flake8
 	poetry add pytest-cov
 
+test:
+	poetry run pytest
+
 gendiff:
 	poetry run gendiff
 
