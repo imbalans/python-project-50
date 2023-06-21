@@ -1,7 +1,5 @@
 install:
 	poetry install
-	poetry add flake8
-	poetry add pytest-cov
 
 test:
 	poetry run pytest

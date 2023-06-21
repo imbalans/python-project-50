@@ -1,16 +1,10 @@
-from gendiff.parser import definition_form
-from gendiff.formatters.generate_stylish import generate, stulish
-from gendiff.formatters.generate_plain import plain
-from gendiff.formatters.generate_json import json_s
+from gendiff.parser import load_and_select_formatter
+from gendiff.formaters import choice_formater
+from gendiff.generate import build_dicts_diff
 
 
 def generate_diff(file_path1, file_path2, formater="stylish"):
-    file1 = definition_form(file_path1)
-    file2 = definition_form(file_path2)
-    formater = formater.lower()
-    if formater == "stylish":
-        return stulish(generate(file1, file2))
-    if formater == "plain":
-        return plain(file1, file2)
-    if formater == "json":
-        return json_s(generate(file1, file2))
+    file1 = load_and_select_formatter(file_path1)
+    file2 = load_and_select_formatter(file_path2)
+    content = build_dicts_diff(file1, file2)
+    return choice_formater.apply_formatter(content, formater)
