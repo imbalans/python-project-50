@@ -1,20 +1,10 @@
 from gendiff import parser
-
-file1 = {
-    "host": "hexlet.io",
-    "timeout": 50,
-    "proxy": "123.234.53.22",
-    "follow": False
-}
-file2 = {
-    "timeout": 20,
-    "verbose": True,
-    "host": "hexlet.io"
-}
+import pytest
+from gendiff.tests import test_formaters
 
 
-def test_pars():
-    assert parser.definition_form('gendiff/tests/fixtures/file1.json') == file1
-    assert parser.definition_form('gendiff/tests/fixtures/file1.yaml') == file1
-    assert parser.definition_form('gendiff/tests/fixtures/file2.json') == file2
-    assert parser.definition_form('gendiff/tests/fixtures/file2.yml') == file2
+@pytest.mark.parametrize("file_name1,file_name2", [("file1.json", "file1.yaml"), ("file2.json", "file2.yml")])
+def test_pars(file_name1, file_name2):
+    assert parser.load_and_select_formatter(
+        test_formaters.build_fixture_path(file_name1)) == parser.load_and_select_formatter(
+        test_formaters.build_fixture_path(file_name2))
