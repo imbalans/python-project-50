@@ -2,13 +2,13 @@ import json
 import yaml
 
 
-def load_and_select_formatter(file_path):
+def read_file(file_path):
     extension = file_path[-4:]
     content = open(file_path)
-    return select_formatter(content, extension)
+    return parse(content, extension)
 
 
-def select_formatter(content, extension):
+def parse(content, extension):
     if extension == "json":
         return dict((json.load(content)).items())
     if extension == "yaml" or extension == ".yml":
